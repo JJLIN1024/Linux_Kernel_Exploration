@@ -1,13 +1,13 @@
-#include <linux/init.h>   // for macros
-#include <linux/module.h> // needed for all module
-#include <linux/printk.h> // pr_info()
-#include <linux/kernel.h>       // ARRAY_SIZE()
+#include <linux/init.h>   						// for macros
+#include <linux/module.h> 						// needed for all module
+#include <linux/printk.h> 						// pr_info()
+#include <linux/kernel.h>       				// ARRAY_SIZE()
 #include <linux/moduleparam.h>
 #include <linux/stat.h>
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("LKMPG");
-MODULE_DESCRIPTION("A sample driver");
+MODULE_AUTHOR("Jimmy Lin");
+MODULE_DESCRIPTION("A sample driver that accepts command line arguments");
 
 static short int myshort = 1;
 static int myint = 420;
@@ -28,11 +28,11 @@ module_param_array(myintarray, int, &arr_argc, 0000);
 MODULE_PARM_DESC(myintarray, "An array of integers"); 
 
 
-static int __init init_hello(void) 
+static int __init ModuleInit(void) 
 {
 	int i; 
  
-    pr_info("Hello, world 5\n=============\n"); 
+    pr_info("Hello!\n=============\n"); 
     pr_info("myshort is a short integer: %hd\n", myshort); 
     pr_info("myint is an integer: %d\n", myint); 
     pr_info("mylong is a long integer: %ld\n", mylong); 
@@ -45,6 +45,9 @@ static int __init init_hello(void)
 	return 0;
 }
 
-static void __exit cleanup_hello(void) {
-	pr_info("Goodbye, world!\n");
+static void __exit ModuleExit(void) {
+	pr_info("Goodbye!\n");
 }
+
+module_init(ModuleInit);
+module_exit(ModuleExit);
