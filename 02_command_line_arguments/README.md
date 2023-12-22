@@ -1,3 +1,14 @@
+## Guide
+
+[Linux 核心如何處理傳遞到核心模組的參數](https://hackmd.io/@Risheng/S10cihvt5)
+
+For variables like int, double, ..., use `module_param(name, type, permission)`. 
+
+For int array, use `module_param_array(name, type, num, permission)`, where `num` is a pointer to the variable that will store the number of elements of the array initialized by the user at module loading time.
+
+- more on setting [permission bits](https://www.gnu.org/software/libc/manual/html_node/Permission-Bits.html).
+
+
 ## Usage
 
 1. `make`
