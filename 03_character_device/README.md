@@ -1,4 +1,6 @@
-## Guide
+## Basics
+
+check out [Character device drivers](https://linux-kernel-labs.github.io/refs/heads/master/labs/device_drivers.html).
 
 ### struct file_operations
 
