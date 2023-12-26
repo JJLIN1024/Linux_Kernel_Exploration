@@ -13,8 +13,11 @@ MODULE_AUTHOR("Jimmy Lin");
 #endif
 
 #define proc_fs_name "hello world"
+#define PROCFS_MAX_SIZE 1024
 
 static struct proc_dir_entry* proc_file;
+static char proc_file_buffer[PROCFS_MAX_SIZE];
+static unsigned long proc_file_buffer_size = 0;
 
 static ssize_t proc_file_read(struct file *file_pointer, char __user *buffer, 
                              size_t buffer_length, loff_t *offset) {
@@ -33,13 +36,31 @@ static ssize_t proc_file_read(struct file *file_pointer, char __user *buffer,
 	return ret;
 }
 
+static ssize_t proc_file_write(struct file *file_pointer, const char __user* buffer, size_t len, loff_t *offset) {
+	proc_file_buffer_size = len;
+	if(proc_file_buffer_size > PROCFS_MAX_SIZE) {
+		proc_file_buffer_size = PROCFS_MAX_SIZE;
+	}
+
+	if (copy_from_user(proc_file_buffer, buffer, proc_file_buffer_size))
+        return -EFAULT;
+
+    proc_file_buffer[proc_file_buffer_size & (PROCFS_MAX_SIZE - 1)] = '\0';
+    *offset += proc_file_buffer_size;
+    pr_info("procfile write %s\n", proc_file_buffer);
+
+    return proc_file_buffer_size;
+}
+
 #ifdef HAVE_PROC_OPS
 static const struct proc_ops proc_file_ops = {
-	.proc_read = proc_file_read
+	.proc_read = proc_file_read,
+	.proc_write = proc_file_write
 };
 #else
 static const struct file_operations proc_file_ops = {
-	.read = proc_file_read;
+	.read = proc_file_read,
+	.write = proc_file_write
 };
 #endif
 
