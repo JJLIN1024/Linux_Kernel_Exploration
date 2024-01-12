@@ -83,4 +83,6 @@ vermagic:       5.15.0-1044-raspi SMP preempt mod_unload modversions aarch64
 ```console
 Hello World!
 ```
+5. check kernel debug message: `sudo dmesg | tail -7`:
+
 5. remove module inserted: `sudo rmmod proc_file_system.ko`
