@@ -1,4 +1,5 @@
 obj-m += proc_file_system.o
+obj-m += proc_seq_file.o
 
 PWD := $(CURDIR)
 

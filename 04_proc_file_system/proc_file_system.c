@@ -48,19 +48,35 @@ static ssize_t proc_file_write(struct file *file_pointer, const char __user* buf
     proc_file_buffer[proc_file_buffer_size & (PROCFS_MAX_SIZE - 1)] = '\0';
     *offset += proc_file_buffer_size;
     pr_info("procfile write %s\n", proc_file_buffer);
-
     return proc_file_buffer_size;
+}
+
+static int proc_file_open(struct inode *inode, struct file *file)
+{
+    try_module_get(THIS_MODULE);
+    return 0;
+}
+
+static int proc_file_close(struct inode *inode, struct file *file)
+{
+    module_put(THIS_MODULE);
+    return 0;
 }
 
 #ifdef HAVE_PROC_OPS
 static const struct proc_ops proc_file_ops = {
 	.proc_read = proc_file_read,
-	.proc_write = proc_file_write
+	.proc_write = proc_file_write,
+	.proc_open = proc_file_open,
+	.proc_release = proc_file_close
 };
 #else
 static const struct file_operations proc_file_ops = {
 	.read = proc_file_read,
-	.write = proc_file_write
+	.write = proc_file_write,
+	.open = proc_file_open,
+	.release = proc_file_close
+
 };
 #endif
 
