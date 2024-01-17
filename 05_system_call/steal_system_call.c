@@ -54,7 +54,7 @@ static unsigned long **sys_call_table_stolen;
 /* UID we want to spy on - will be filled from the command line. */ 
 static uid_t uid = -1; 
 module_param(uid, int, 0644); 
- 
+
 /* A pointer to the original system call. The reason we keep this, rather 
  * than call the original function (sys_openat), is because somebody else 
  * might have replaced the system call before us. Note that this is not 
