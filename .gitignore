@@ -1,5 +1,7 @@
 linux-6.7/
-
+GPATH
+GRTAGS
+GTAGS
 .vscode/
 # Prerequisites
 *.d
