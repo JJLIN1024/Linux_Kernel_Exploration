@@ -5,7 +5,6 @@ MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Jimmy Lin");
 MODULE_DESCRIPTION("A hello world module");
 
-
 static int __init init_hello(void) 
 {
 	printk("Hello World!\n");
