@@ -65,7 +65,6 @@ static int __init completions_init(void)
 ERROR_THREAD_2: 
     kthread_stop(crank_thread); 
 ERROR_THREAD_1: 
- 
     return -1; 
 } 
  

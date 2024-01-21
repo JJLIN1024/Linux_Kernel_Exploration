@@ -51,6 +51,13 @@ Finally, in VSCode, use the command palette to let C/C++ GNU Global do the work 
 
 We're done! Now press the mouse's left key and choose `go to definition` or simply press F12.
 
+
+## TODOs
+
+- synchronization mechanism
+    - pthread_barrier()
+    - misuse of locks/semaphores and busy-loops
+
 ## Reference
 - [The Linux Kernel Module Programming Guide](https://sysprog21.github.io/lkmpg/)
 - [Linux_Driver_Tutorial](https://github.com/Johannes4Linux/Linux_Driver_Tutorial)
