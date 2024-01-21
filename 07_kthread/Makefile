@@ -1,4 +1,4 @@
-obj-m += threads.o
+obj-m += kthreads.o
 
 PWD := $(CURDIR)
 

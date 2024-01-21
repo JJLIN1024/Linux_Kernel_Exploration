@@ -283,26 +283,26 @@ main:
 1. `make`
 
 ```console
-make -C /lib/modules/5.15.0-91-generic/build M=/home/jimmy/Linux_Driver_Practice/07_threads modules
+make -C /lib/modules/5.15.0-91-generic/build M=/home/jimmy/Linux_Driver_Practice/07_kthread modules
 make[1]: Entering directory '/usr/src/linux-headers-5.15.0-91-generic'
-  CC [M]  /home/jimmy/Linux_Driver_Practice/07_threads/threads.o
-  MODPOST /home/jimmy/Linux_Driver_Practice/07_threads/Module.symvers
-  CC [M]  /home/jimmy/Linux_Driver_Practice/07_threads/threads.mod.o
-  LD [M]  /home/jimmy/Linux_Driver_Practice/07_threads/threads.ko
-  BTF [M] /home/jimmy/Linux_Driver_Practice/07_threads/threads.ko
-Skipping BTF generation for /home/jimmy/Linux_Driver_Practice/07_threads/threads.ko due to unavailability of vmlinux
+  CC [M]  /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.o
+  MODPOST /home/jimmy/Linux_Driver_Practice/07_kthread/Module.symvers
+  CC [M]  /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.mod.o
+  LD [M]  /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.ko
+  BTF [M] /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.ko
+Skipping BTF generation for /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.ko due to unavailability of vmlinux
 make[1]: Leaving directory '/usr/src/linux-headers-5.15.0-91-generic'
 ```
 
-2. check module info: `modinfo threads.ko`
+2. check module info: `modinfo kthreads.ko`
 
 ```console
-filename:       /home/jimmy/Linux_Driver_Practice/07_threads/threads.ko
+filename:       /home/jimmy/Linux_Driver_Practice/07_kthread/kthreads.ko
 license:        GPL
-description:    Completions example
-srcversion:     A86692770DFEFCF09EC56EA
+description:    Kernel Threads Completions Example
+srcversion:     AADB635B6B3F4E857151864
 depends:        
-name:           threads
+name:           kthreads
 vermagic:       5.15.0-91-generic SMP mod_unload modversions aarch64
 ```
 3. insert module into the kernel: `sudo insmod threads.ko`
@@ -310,18 +310,23 @@ vermagic:       5.15.0-91-generic SMP mod_unload modversions aarch64
 4. check if the module is successfully inserted: `sudo lsmod | grep threads`
 
 ```console
-threads                16384  0
+kthreads               16384  0
 ```
 
-5. check kernel ring buffer: `sudo dmesg -k | tail -5`
+5. check kernel ring buffer: `sudo dmesg -k | tail -3`
 
 ```console
-[  231.204818] threads: loading out-of-tree module taints kernel.
-[  231.204877] threads: module verification failed: signature and/or required key missing - tainting kernel
-[  231.205297] completions example
-[  231.206616] Turn the crank
-[  231.206646] Flywheel spins up
+[10870.960797] kernel threads completions example
+[10870.962362] Hello from kthread 1!
+[10870.962468] Hello from kthread 2!
 ```
 
-6. remove the module: `sudo rmmod threads`
+6. remove the module: `sudo rmmod kthreads` & `sudo dmesg -k | tail -4`
+
+```console
+[10870.960797] kernel threads completions example
+[10870.962362] Hello from kthread 1!
+[10870.962468] Hello from kthread 2!
+[10924.760696] kthreads completions exit```
+
 7. clean up: `make clean`
